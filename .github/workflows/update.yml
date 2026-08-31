@@ -1,0 +1,32 @@
+name: Auto Update FB Posts
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 檢查程式碼
+        uses: actions/checkout@v3
+
+      - name: 設定 Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: 執行抓取腳本
+        run: python update_posts.py
+
+      - name: 自動 Commit 並推送更新
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add index.html
+          git diff-index --quiet HEAD || git commit -m "Auto update FB posts [skip ci]"
+          git push
