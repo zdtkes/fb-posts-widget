@@ -32,5 +32,18 @@
     </a>
   </div>
 </div>
+  <script>
+  function sendHeight() {
+    // 取得當前網頁實際總高度
+    var height = document.body.scrollHeight || document.documentElement.scrollHeight;
+    // 回傳高度給外層網站
+    window.parent.postMessage({ type: 'RESIZE_FB_IFRAME', height: height }, '*');
+  }
+
+  // 網頁載入、縮放及 FB 貼文渲染時持續更新高度
+  window.addEventListener('load', sendHeight);
+  window.addEventListener('resize', sendHeight);
+  setInterval(sendHeight, 1000); // 確保 FB 外掛載入完成後能自動更新
+</script>
 </body>
 </html>
