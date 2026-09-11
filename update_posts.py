@@ -24,10 +24,15 @@ def get_latest_posts():
                     continue
                 
                 target_url = clean_fb_url(link)
+                
+                # 多重檢查：從網址、標題、描述與附件判斷是否為影片/Reel貼文
+                title = str(item.get('title', '')).lower()
+                desc = str(item.get('description', '')).lower()
+                enclosure = str(item.get('enclosure', '')).lower()
                 link_lower = target_url.lower()
                 
-                # 自動判斷是否為影片/Reel類型的貼文
-                is_video = any(k in link_lower for k in ['videos', 'reel', 'watch'])
+                video_keywords = ['video', 'videos', 'reel', 'reels', 'watch', 'mp4', '影片', '播放']
+                is_video = any(k in link_lower or k in title or k in desc or k in enclosure for k in video_keywords)
                 
                 encoded_href = urllib.parse.quote(target_url, safe='')
                 embed_url = f"https://www.facebook.com/plugins/post.php?href={encoded_href}&show_text=true&width=500"
@@ -62,17 +67,23 @@ def main():
     p1 = posts[0] if len(posts) > 0 else default_1
     p2 = posts[1] if len(posts) > 1 else default_2
 
-    # 影片貼文設定 480px 高度（消除空白），一般圖文設定 700px 高度
-    h1 = "480px" if p1['is_video'] else "700px"
-    h2 = "480px" if p2['is_video'] else "700px"
+    # 貼文高度設定：影片貼文手機版降至 340px（無空白），圖文貼文為 580px
+    h1_desk = "500px" if p1['is_video'] else "650px"
+    h1_mob  = "340px" if p1['is_video'] else "580px"
+    
+    h2_desk = "500px" if p2['is_video'] else "650px"
+    h2_mob  = "340px" if p2['is_video'] else "580px"
 
     with open("template.html", "r", encoding="utf-8") as f:
         content = f.read()
 
     content = content.replace("__FB_POST_1__", p1['url'])
-    content = content.replace("__FB_POST_1_HEIGHT__", h1)
+    content = content.replace("__FB_POST_1_HEIGHT_DESK__", h1_desk)
+    content = content.replace("__FB_POST_1_HEIGHT_MOB__", h1_mob)
+    
     content = content.replace("__FB_POST_2__", p2['url'])
-    content = content.replace("__FB_POST_2_HEIGHT__", h2)
+    content = content.replace("__FB_POST_2_HEIGHT_DESK__", h2_desk)
+    content = content.replace("__FB_POST_2_HEIGHT_MOB__", h2_mob)
 
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(content)
