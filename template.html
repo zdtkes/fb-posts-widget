@@ -13,17 +13,17 @@
     .fb-post-card iframe { 
       width: 1px; 
       min-width: 100%; 
-      height: 650px; 
       border: none; 
       display: block;
       background-color: #ffffff;
     }
 
+    /* 根據貼文類型動態替換高度 */
+    .fb-card-1 iframe { height: __FB_POST_1_HEIGHT__; }
+    .fb-card-2 iframe { height: __FB_POST_2_HEIGHT__; }
+
     @media (max-width: 768px) {
       .fb-posts-grid { gap: 20px; }
-      .fb-post-card iframe { 
-        height: 650px; 
-      }
     }
 
     .fb-more-wrapper { text-align: center; margin-top: 32px; }
@@ -34,10 +34,10 @@
 <body>
 <div class="fb-section">
   <div class="fb-posts-grid">
-    <div class="fb-post-card">
+    <div class="fb-post-card fb-card-1">
       <iframe src="__FB_POST_1__" scrolling="auto" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
     </div>
-    <div class="fb-post-card">
+    <div class="fb-post-card fb-card-2">
       <iframe src="__FB_POST_2__" scrolling="auto" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
     </div>
   </div>
