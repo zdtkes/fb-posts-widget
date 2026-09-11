@@ -5,30 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>彰化縣土庫國小 FB 最新動態</title>
   <style type="text/css">
-    body { margin: 0; padding: 0; background-color: #f9fafb; }
-    .fb-section { max-width: 1100px; margin: 0 auto; padding: 20px 12px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    .fb-posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; justify-items: center; align-items: start; }
-    .fb-post-card { width: 100%; max-width: 500px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border: 1px solid #e5e7eb; overflow: hidden; display: flex; justify-content: center; }
+    body { margin: 0; padding: 0; background-color: transparent; }
+    
+    .fb-section { 
+      max-width: 1100px; 
+      margin: 0 auto; 
+      padding: 12px 8px; 
+      box-sizing: border-box; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .fb-posts-grid { 
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px; 
+      justify-content: center; 
+      align-items: start; 
+    }
+    
+    .fb-post-card { 
+      width: 100%; 
+      max-width: 480px; 
+      background: #ffffff; 
+      border-radius: 16px; 
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06); 
+      border: 1px solid #e5e7eb; 
+      overflow: hidden; 
+      display: flex; 
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
     
     .fb-post-card iframe { 
-      width: 1px; 
-      min-width: 100%; 
+      width: 100%; 
       border: none; 
       display: block;
+      margin: 0 auto;
       background-color: #ffffff;
     }
 
-    /* 根據貼文類型動態替換高度 */
-    .fb-card-1 iframe { height: 480px; }
-    .fb-card-2 iframe { height: 700px; }
+    /* 電腦版動態高度 */
+    .fb-card-1 iframe { height: 500px; }
+    .fb-card-2 iframe { height: 650px; }
 
+    /* 手機與平板動態高度（完美貼合內容） */
     @media (max-width: 768px) {
-      .fb-posts-grid { gap: 20px; }
+      .fb-posts-grid { gap: 16px; }
+      .fb-card-1 iframe { height: 340px; }
+      .fb-card-2 iframe { height: 580px; }
     }
 
-    .fb-more-wrapper { text-align: center; margin-top: 32px; }
-    .fb-more-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background-color: #1877f2; color: #ffffff !important; font-size: 16px; font-weight: 600; padding: 12px 32px; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25); transition: all 0.2s ease-in-out; }
-    .fb-more-btn:hover { background-color: #166fe5; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(24, 119, 242, 0.35); }
+    .fb-more-wrapper { text-align: center; margin-top: 24px; width: 100%; }
+    .fb-more-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background-color: #1877f2; color: #ffffff !important; font-size: 15px; font-weight: 600; padding: 10px 24px; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 12px rgba(24, 119, 242, 0.2); transition: all 0.2s ease-in-out; }
+    .fb-more-btn:hover { background-color: #166fe5; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(24, 119, 242, 0.3); }
   </style>
 </head>
 <body>
@@ -43,7 +77,7 @@
   </div>
   <div class="fb-more-wrapper">
     <a class="fb-more-btn" href="https://www.facebook.com/profile.php?id=100057555523595" rel="noopener noreferrer" target="_blank">
-      <svg fill="currentColor" height="20" viewbox="0 0 24 24" width="20"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+      <svg fill="currentColor" height="18" viewbox="0 0 24 24" width="18"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
       前往彰化縣土庫國小 FB 查看更多動態
     </a>
   </div>
