@@ -10,7 +10,6 @@
     .fb-posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; justify-items: center; align-items: start; }
     .fb-post-card { width: 100%; max-width: 500px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border: 1px solid #e5e7eb; overflow: hidden; display: flex; justify-content: center; }
     
-    /* 電腦版基本設定 */
     .fb-post-card iframe { 
       width: 1px; 
       min-width: 100%; 
@@ -20,11 +19,11 @@
       background-color: #ffffff;
     }
 
-    /* 手機與平板 RWD：影片貼文高度較長，將容器放寬至 1050px */
+    /* 手機版：提高卡片與 iframe 的高度至 1200px，確保影片+文字完整呈現 */
     @media (max-width: 768px) {
       .fb-posts-grid { gap: 20px; }
       .fb-post-card iframe { 
-        height: 1050px; 
+        height: 1200px; 
       }
     }
 
