@@ -23,19 +23,22 @@ def get_latest_posts():
                 if not link:
                     continue
                 
-                # 關鍵修正：自動過濾 FB 影片與 Reels（FB 官方外掛不支援影片顯示內文）
-                link_lower = link.lower()
-                if 'videos' in link_lower or 'reel' in link_lower or 'watch' in link_lower:
-                    print(f"跳過影片類貼文: {link}")
-                    continue
-                
-                # 取得乾淨連結並帶入 FB 官方嵌入外掛
                 target_url = clean_fb_url(link)
+                link_lower = target_url.lower()
+                
+                # 自動判斷是否為影片/Reel類型的貼文
+                is_video = any(k in link_lower for k in ['videos', 'reel', 'watch'])
+                
                 encoded_href = urllib.parse.quote(target_url, safe='')
                 embed_url = f"https://www.facebook.com/plugins/post.php?href={encoded_href}&show_text=true&width=500"
 
-                if embed_url not in posts:
-                    posts.append(embed_url)
+                post_data = {
+                    'url': embed_url,
+                    'is_video': is_video
+                }
+
+                if not any(p['url'] == embed_url for p in posts):
+                    posts.append(post_data)
 
                 if len(posts) >= 2:
                     break
@@ -47,17 +50,29 @@ def get_latest_posts():
 def main():
     posts = get_latest_posts()
     
-    default_post_1 = "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2F100057555523595%2Fposts%2Fpfbid0g415rmcwx6FwxnqWUrERRA91D9X4E7M4MDQGUrK5burFDQ5MEsFMu3yJxiT89rwl&show_text=true&width=500"
-    default_post_2 = "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2F100057555523595%2Fposts%2Fpfbid06gfFHvUoW6P5iJw8tqpWaurEozeGdovCA8Rm26CjNTaZ6628e7ZFW81W6x8aP7wml&show_text=true&width=500"
+    default_1 = {
+        'url': "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2F100057555523595%2Fposts%2Fpfbid0g415rmcwx6FwxnqWUrERRA91D9X4E7M4MDQGUrK5burFDQ5MEsFMu3yJxiT89rwl&show_text=true&width=500",
+        'is_video': False
+    }
+    default_2 = {
+        'url': "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2F100057555523595%2Fposts%2Fpfbid06gfFHvUoW6P5iJw8tqpWaurEozeGdovCA8Rm26CjNTaZ6628e7ZFW81W6x8aP7wml&show_text=true&width=500",
+        'is_video': False
+    }
 
-    post_1 = posts[0] if len(posts) > 0 else default_post_1
-    post_2 = posts[1] if len(posts) > 1 else default_post_2
+    p1 = posts[0] if len(posts) > 0 else default_1
+    p2 = posts[1] if len(posts) > 1 else default_2
+
+    # 影片貼文設定 480px 高度（消除空白），一般圖文設定 700px 高度
+    h1 = "480px" if p1['is_video'] else "700px"
+    h2 = "480px" if p2['is_video'] else "700px"
 
     with open("template.html", "r", encoding="utf-8") as f:
         content = f.read()
 
-    content = content.replace("__FB_POST_1__", post_1)
-    content = content.replace("__FB_POST_2__", post_2)
+    content = content.replace("__FB_POST_1__", p1['url'])
+    content = content.replace("__FB_POST_1_HEIGHT__", h1)
+    content = content.replace("__FB_POST_2__", p2['url'])
+    content = content.replace("__FB_POST_2_HEIGHT__", h2)
 
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(content)
