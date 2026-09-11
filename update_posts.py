@@ -7,10 +7,9 @@ RSS_URL = "https://fetchrss.com/feed/1x1JUGClSF2w1x1JTf5xPGeY.rss"
 API_URL = f"https://api.rss2json.com/v1/api.json?rss_url={urllib.parse.quote(RSS_URL)}"
 
 def clean_fb_url(url):
-    """清理 FB 網址，切除 RSS 附帶的追蹤參數（如 ?ref=embed、&__tn__=...），保留最原始乾淨的貼文連結"""
+    """清理 FB 網址，切除 RSS 附帶的追蹤參數"""
     if not url:
         return ""
-    # 取問號前的主網址，避免雜訊參數干擾 FB 外掛解析
     return url.split('?')[0]
 
 def get_latest_posts():
@@ -24,10 +23,14 @@ def get_latest_posts():
                 if not link:
                     continue
                 
-                # 取得乾淨的 FB 原始連結
+                # 關鍵修正：自動過濾 FB 影片與 Reels（FB 官方外掛不支援影片顯示內文）
+                link_lower = link.lower()
+                if 'videos' in link_lower or 'reel' in link_lower or 'watch' in link_lower:
+                    print(f"跳過影片類貼文: {link}")
+                    continue
+                
+                # 取得乾淨連結並帶入 FB 官方嵌入外掛
                 target_url = clean_fb_url(link)
-
-                # 將乾淨連結編碼後帶入 FB 官方 post.php 外掛
                 encoded_href = urllib.parse.quote(target_url, safe='')
                 embed_url = f"https://www.facebook.com/plugins/post.php?href={encoded_href}&show_text=true&width=500"
 
