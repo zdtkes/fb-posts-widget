@@ -3,7 +3,7 @@ import urllib.parse
 import json
 
 PAGE_ID = "100057555523595"
-RSS_URL = "https://fetchrss.com/feed/1x1JUGClSF2w1x1JTf5xPGeY.rss"
+RSS_URL = "https://fetchrss.com/feed/1xRJRz5lP3181xRJSU9IR558.rss"
 API_URL = f"https://api.rss2json.com/v1/api.json?rss_url={urllib.parse.quote(RSS_URL)}"
 
 def clean_fb_url(url):
